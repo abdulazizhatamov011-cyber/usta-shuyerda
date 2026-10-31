@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+/* UstaTop dizayn tizimi: Samarqand feruzasi + oltin aksent */
+@theme {
+  --color-brand-50: #ecfdfb;
+  --color-brand-100: #d0f7f2;
+  --color-brand-200: #a3ece3;
+  --color-brand-300: #6bdcd0;
+  --color-brand-400: #34c4b8;
+  --color-brand-500: #17a89f;
+  --color-brand-600: #0e8a85;
+  --color-brand-700: #106e6b;
+  --color-brand-800: #125856;
+  --color-brand-900: #134947;
+  --color-brand-950: #062c2c;
+
+  --color-accent-50: #fffaeb;
+  --color-accent-100: #fff0c7;
+  --color-accent-200: #ffe08a;
+  --color-accent-300: #ffcb4d;
+  --color-accent-400: #ffb41f;
+  --color-accent-500: #f79509;
+  --color-accent-600: #db7004;
+
+  --color-ink: #0b1f1f;
+  --color-muted: #4b6363;
+  --color-line: #dbe8e6;
+  --color-surface: #f6fbfa;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-manrope), ui-sans-serif,
+    system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    color-scheme: light;
+  }
+
+  body {
+    background: #ffffff;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-brand-950);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+/* O‘zbek naqshli (sakkiz qirrali yulduz) fon */
+.pattern-star {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%2317a89f' stroke-opacity='.16' stroke-width='1'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 64px 64px;
+}
+
+.pattern-star-light {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.12' stroke-width='1'%3E%3Crect x='16' y='16' width='32' height='32'/%3E%3Crect x='16' y='16' width='32' height='32' transform='rotate(45 32 32)'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 64px 64px;
+}
