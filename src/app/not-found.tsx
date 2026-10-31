@@ -15,7 +15,7 @@ export default function NotFound() {
             Sahifa topilmadi
           </h1>
           <p className="mt-3 max-w-md text-muted">
-            Siz izlagan sahifa ko‘chirilgan yoki mavjud emas. Bosh sahifadan davom eting.
+            Siz izlagan sahifa ko&apos;chirilgan yoki mavjud emas. Bosh sahifadan davom eting.
           </p>
           <div className="mt-8 flex gap-3">
             <Link href="/" className={buttonStyles({ variant: "primary", size: "lg" })}>

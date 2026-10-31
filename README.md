@@ -72,6 +72,21 @@ Admin o‘zgartirishi saytdagi keshni darhol yangilaydi (`updateTag("masters")`)
 - Kirishga urinishlar cheklangan (rate limit), mavjud bo‘lmagan email uchun ham parol tekshiruvi vaqti bir xil
 - Ommaviy formalar server tomonda Zod bilan qayta tekshiriladi
 
+## Vercel'ga joylash
+
+`vercel.json` loyihani Next.js deb belgilaydi (aks holda “No Output Directory named public” xatosi chiqadi).
+Vercel loyiha sozlamalarida **Environment Variables** ga qo‘shing:
+
+| O‘zgaruvchi | Izoh |
+| --- | --- |
+| `SESSION_SECRET` | kamida 32 belgi, **majburiy** (productionda bo‘lmasa admin kirishi ishlamaydi) |
+| `ADMIN_EMAIL` | admin email |
+| `ADMIN_PASSWORD` | admin paroli |
+
+**Muhim:** Vercel'da SQLite vaqtinchalik `/tmp` da turadi. Server qayta ishga tushganda baza
+qayta yaratiladi (demo ustalar bilan), **buyurtma va arizalar yo‘qoladi**. Bu faqat ko‘rsatish (demo)
+uchun. Haqiqiy foydalanish uchun Postgres (Neon / Supabase) ga o‘ting.
+
 ## Ma’lumotlar bazasini almashtirish
 
 SQLite fayli bitta serverda yaxshi ishlaydi, lekin **Vercel kabi serverless muhitda saqlanmaydi**.

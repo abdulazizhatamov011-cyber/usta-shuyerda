@@ -1,5 +1,6 @@
 import "server-only";
 import { mkdirSync } from "node:fs";
+import { tmpdir } from "node:os";
 import path from "node:path";
 import { DatabaseSync } from "node:sqlite";
 import { masters as seedMasters } from "@/data/masters";
@@ -21,7 +22,10 @@ export function db(): DatabaseSync {
 }
 
 function open(): DatabaseSync {
-  const dir = process.env.DATABASE_DIR ?? path.join(process.cwd(), "data");
+  // Vercel'da loyiha papkasi faqat o‘qiladi; yozish mumkin joy — vaqtinchalik /tmp.
+  // Demo uchun yetarli, lekin ma’lumotlar saqlanmaydi: productionda Postgres kerak.
+  const fallback = process.env.VERCEL ? path.join(tmpdir(), "ustatop") : path.join(process.cwd(), "data");
+  const dir = process.env.DATABASE_DIR ?? fallback;
   mkdirSync(dir, { recursive: true });
 
   const database = new DatabaseSync(path.join(dir, "ustatop.db"));
