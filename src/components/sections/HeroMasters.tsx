@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, BadgeCheck, Briefcase, Lock, Zap } from "lucide-react";
 import { Avatar } from "@/components/ui/Avatar";
@@ -25,13 +25,36 @@ export type HeroMaster = Pick<
   | "tone"
 >;
 
+const ROTATE_MS = 5000;
+
 export function HeroMasters({ masters }: { masters: HeroMaster[] }) {
   const [activeId, setActiveId] = useState(masters[0]?.id);
+  // Kursor/fokus kartada bo‘lsa vaqtincha, foydalanuvchi o‘zi tanlasa butunlay to‘xtaydi.
+  const [hovered, setHovered] = useState(false);
+  const [chosen, setChosen] = useState(false);
+  const autoplay = masters.length > 1 && !hovered && !chosen;
+
+  useEffect(() => {
+    if (!autoplay) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = setInterval(() => {
+      setActiveId((current) => {
+        const index = masters.findIndex((master) => master.id === current);
+        return masters[(index + 1) % masters.length].id;
+      });
+    }, ROTATE_MS);
+    return () => clearInterval(timer);
+  }, [autoplay, masters]);
+
   const active = masters.find((master) => master.id === activeId) ?? masters[0];
   if (!active) return null;
 
   return (
-    <div className="relative mx-auto w-full max-w-md animate-fade-up [animation-delay:150ms] lg:max-w-none">
+    <div
+      onPointerEnter={() => setHovered(true)}
+      onPointerLeave={() => setHovered(false)}
+      className="relative mx-auto w-full max-w-md animate-fade-up [animation-delay:150ms] lg:max-w-none"
+    >
       <div className="absolute inset-6 rotate-3 rounded-[2.5rem] bg-linear-to-br from-brand-500 to-brand-800" aria-hidden />
       <div className="pattern-star-light absolute inset-6 rotate-3 rounded-[2.5rem]" aria-hidden />
 
@@ -75,7 +98,10 @@ export function HeroMasters({ masters }: { masters: HeroMaster[] }) {
                 <button
                   type="button"
                   aria-pressed={selected}
-                  onClick={() => setActiveId(master.id)}
+                  onClick={() => {
+                    setActiveId(master.id);
+                    setChosen(true);
+                  }}
                   className={cn(
                     "flex w-full cursor-pointer items-center gap-3 rounded-xl border px-2.5 py-2 text-left transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600",
                     selected
