@@ -7,8 +7,8 @@ export const site = {
   // Quyidagi aloqa maʼlumotlari namunaviy. Haqiqiy loyihada almashtiring.
   contact: {
     email: "salom@ustatop.example",
-    phone: "+998 71 000 00 00",
-    telegram: "@ustatop_uz",
+    phone: "+998 50 020 06 84",
+    telegram: "@abo_coder",
   },
 } as const;
 

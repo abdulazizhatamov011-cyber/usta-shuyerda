@@ -4,7 +4,6 @@ import {
   CheckCircle2,
   Clock,
   Lock,
-  MapPin,
   Search,
   Zap,
 } from "lucide-react";
@@ -13,7 +12,7 @@ import { buttonStyles } from "@/components/ui/buttonStyles";
 import { Container } from "@/components/ui/Container";
 import { Rating } from "@/components/ui/Rating";
 import { categories } from "@/data/categories";
-import { cities } from "@/data/cities";
+import { HeroLocationFields } from "./HeroLocationFields";
 
 const quickLinks = categories.slice(0, 5);
 
@@ -63,38 +62,26 @@ export function Hero() {
 
           <form
             action="/ustalar"
-            className="mt-8 flex max-w-2xl flex-col gap-2 rounded-3xl border border-line bg-white p-2 shadow-xl shadow-brand-900/10 sm:flex-row sm:items-center sm:rounded-full"
+            className="mt-8 max-w-2xl rounded-3xl border border-line bg-white p-2 shadow-xl shadow-brand-900/10"
           >
-            <label className="flex flex-1 items-center gap-3 px-4 py-2">
-              <Search className="size-5 shrink-0 text-brand-500" aria-hidden />
-              <span className="sr-only">Qanday xizmat kerak?</span>
-              <input
-                name="q"
-                type="search"
-                placeholder="Qanday xizmat kerak? Masalan, santexnik"
-                className="w-full bg-transparent text-base text-ink outline-none placeholder:text-muted/70"
-              />
-            </label>
-            <span className="hidden h-8 w-px bg-line sm:block" aria-hidden />
-            <label className="flex items-center gap-3 px-4 py-2 sm:w-44">
-              <MapPin className="size-5 shrink-0 text-brand-500" aria-hidden />
-              <span className="sr-only">Shahar</span>
-              <select
-                name="shahar"
-                defaultValue=""
-                className="w-full cursor-pointer bg-transparent text-base text-ink outline-none"
-              >
-                <option value="">Barcha shahar</option>
-                {cities.map((city) => (
-                  <option key={city} value={city}>
-                    {city}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <button type="submit" className={buttonStyles({ variant: "primary", size: "lg" })}>
-              Qidirish
-            </button>
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+              <label className="flex flex-1 items-center gap-3 px-4 py-2">
+                <Search className="size-5 shrink-0 text-brand-500" aria-hidden />
+                <span className="sr-only">Qanday xizmat kerak?</span>
+                <input
+                  name="q"
+                  type="search"
+                  placeholder="Qanday xizmat kerak? Masalan, santexnik"
+                  className="w-full bg-transparent text-base text-ink outline-none placeholder:text-muted/70"
+                />
+              </label>
+              <button type="submit" className={buttonStyles({ variant: "primary", size: "lg" })}>
+                Qidirish
+              </button>
+            </div>
+            <div className="mt-2 flex flex-col border-t border-line pt-2 sm:flex-row sm:items-center">
+              <HeroLocationFields />
+            </div>
           </form>
 
           <div className="mt-5 flex flex-wrap items-center gap-2 text-sm">
