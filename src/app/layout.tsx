@@ -32,6 +32,8 @@ export const metadata: Metadata = {
     "xizmatlar",
     "UstaTop",
   ],
+  icons: { apple: "/icons/apple-touch-icon.png" },
+  appleWebApp: { capable: true, title: site.name, statusBarStyle: "default" },
   openGraph: {
     title: `${site.name} — ishonchli ustalar bir joyda`,
     description: site.description,
