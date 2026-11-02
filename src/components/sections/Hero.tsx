@@ -1,22 +1,22 @@
 import Link from "next/link";
-import {
-  BadgeCheck,
-  CheckCircle2,
-  Clock,
-  Lock,
-  Search,
-  Zap,
-} from "lucide-react";
-import { Avatar } from "@/components/ui/Avatar";
+import { Search } from "lucide-react";
 import { buttonStyles } from "@/components/ui/buttonStyles";
 import { Container } from "@/components/ui/Container";
-import { Rating } from "@/components/ui/Rating";
 import { categories } from "@/data/categories";
+import { getFeaturedMasters } from "@/server/masters";
 import { HeroLocationFields } from "./HeroLocationFields";
+import { HeroMasters, type HeroMaster } from "./HeroMasters";
 
 const quickLinks = categories.slice(0, 5);
 
-export function Hero() {
+export async function Hero() {
+  const featured = await getFeaturedMasters(4);
+  const top: HeroMaster[] = featured.map(
+    ({ id, name, profession, city, rating, reviewCount, completedJobs, experience, priceFrom, verified, responseMinutes, tone }) => ({
+      id, name, profession, city, rating, reviewCount, completedJobs, experience, priceFrom, verified, responseMinutes, tone,
+    }),
+  );
+
   return (
     <section className="relative bg-linear-to-b from-brand-50 via-white to-white">
       <div className="absolute inset-0 overflow-hidden" aria-hidden>
@@ -25,7 +25,7 @@ export function Hero() {
         <div className="absolute -left-24 top-60 size-80 rounded-full bg-accent-200/40 blur-3xl" aria-hidden />
       </div>
 
-      <Container className="relative grid items-center gap-14 pb-20 pt-12 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:pb-28 lg:pt-20">
+      <Container className="relative grid grid-cols-[minmax(0,1fr)] items-center gap-14 pb-20 pt-12 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:pb-28 lg:pt-20">
         <div className="animate-fade-up">
           <p className="inline-flex items-center gap-2 rounded-full border border-brand-200 bg-white/80 px-4 py-1.5 text-sm font-semibold text-brand-800 shadow-sm backdrop-blur">
             <span className="relative flex size-2">
@@ -115,99 +115,8 @@ export function Hero() {
           </ul>
         </div>
 
-        <HeroVisual />
+        {top.length > 0 && <HeroMasters masters={top} />}
       </Container>
     </section>
-  );
-}
-
-function HeroVisual() {
-  return (
-    <div className="relative mx-auto w-full max-w-md animate-fade-up [animation-delay:150ms] lg:max-w-none">
-      <div className="absolute inset-6 rotate-3 rounded-[2.5rem] bg-linear-to-br from-brand-500 to-brand-800" aria-hidden />
-      <div className="pattern-star-light absolute inset-6 rotate-3 rounded-[2.5rem]" aria-hidden />
-
-      <div className="relative mx-auto w-[88%] rounded-[2rem] border border-line bg-white p-5 shadow-2xl shadow-brand-950/20">
-        <div className="flex items-center justify-between">
-          <p className="font-display font-bold text-ink">Buyurtma #1284</p>
-          <span className="rounded-full bg-brand-100 px-3 py-1 text-xs font-bold text-brand-800">
-            Yo‘lda
-          </span>
-        </div>
-
-        <div className="mt-4 flex items-center gap-3 rounded-2xl bg-surface p-3">
-          <Avatar name="Jasur Karimov" tone={0} />
-          <div className="min-w-0 flex-1">
-            <p className="flex items-center gap-1 truncate font-bold text-ink">
-              Jasur Karimov
-              <BadgeCheck className="size-4 shrink-0 fill-brand-500 text-white" aria-hidden />
-            </p>
-            <p className="text-sm text-muted">Santexnik · Toshkent</p>
-          </div>
-          <Rating value={4.9} />
-        </div>
-
-        <ol className="mt-5 space-y-3">
-          {[
-            ["Buyurtma qabul qilindi", true],
-            ["Usta yo‘lga chiqdi", true],
-            ["Ish bajarilmoqda", false],
-            ["To‘lov va sharh", false],
-          ].map(([label, done]) => (
-            <li key={label as string} className="flex items-center gap-3 text-sm">
-              <span
-                className={`flex size-6 items-center justify-center rounded-full ${
-                  done ? "bg-brand-600 text-white" : "border-2 border-line text-transparent"
-                }`}
-              >
-                <CheckCircle2 className="size-4" aria-hidden />
-              </span>
-              <span className={done ? "font-semibold text-ink" : "text-muted"}>
-                {label as string}
-              </span>
-            </li>
-          ))}
-        </ol>
-
-        <div className="mt-5 flex items-center justify-between rounded-2xl bg-brand-50 px-4 py-3">
-          <span className="text-sm text-muted">Kelishilgan narx</span>
-          <span className="font-display text-lg font-extrabold text-brand-800">
-            180 000 so‘m
-          </span>
-        </div>
-      </div>
-
-      <FloatingChip className="-left-1 top-10 sm:-left-4" delay="0s" icon={<Zap className="size-4 text-accent-600" />}>
-        12 daqiqada javob
-      </FloatingChip>
-      <FloatingChip className="-right-1 top-1/2 sm:-right-4" delay="1.5s" icon={<Lock className="size-4 text-brand-600" />}>
-        Xavfsiz to‘lov
-      </FloatingChip>
-      <FloatingChip className="-bottom-2 left-4 sm:left-8" delay="3s" icon={<Clock className="size-4 text-brand-600" />}>
-        Bugun, 18:30 da
-      </FloatingChip>
-    </div>
-  );
-}
-
-function FloatingChip({
-  children,
-  icon,
-  className,
-  delay,
-}: {
-  children: React.ReactNode;
-  icon: React.ReactNode;
-  className: string;
-  delay: string;
-}) {
-  return (
-    <div
-      style={{ animationDelay: delay }}
-      className={`absolute flex animate-float items-center gap-2 rounded-2xl border border-line bg-white px-3.5 py-2.5 text-sm font-bold text-ink shadow-xl shadow-brand-900/10 ${className}`}
-    >
-      {icon}
-      {children}
-    </div>
   );
 }
