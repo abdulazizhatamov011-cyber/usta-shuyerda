@@ -18,10 +18,12 @@ const quickLinks = categories.slice(0, 5);
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden bg-linear-to-b from-brand-50 via-white to-white">
-      <div className="pattern-star absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" aria-hidden />
-      <div className="absolute -right-32 -top-32 size-[28rem] rounded-full bg-brand-200/50 blur-3xl" aria-hidden />
-      <div className="absolute -left-24 top-60 size-80 rounded-full bg-accent-200/40 blur-3xl" aria-hidden />
+    <section className="relative bg-linear-to-b from-brand-50 via-white to-white">
+      <div className="absolute inset-0 overflow-hidden" aria-hidden>
+        <div className="pattern-star absolute inset-0 [mask-image:linear-gradient(to_bottom,black,transparent_85%)]" aria-hidden />
+        <div className="absolute -right-32 -top-32 size-[28rem] rounded-full bg-brand-200/50 blur-3xl" aria-hidden />
+        <div className="absolute -left-24 top-60 size-80 rounded-full bg-accent-200/40 blur-3xl" aria-hidden />
+      </div>
 
       <Container className="relative grid items-center gap-14 pb-20 pt-12 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:gap-8 lg:pb-28 lg:pt-20">
         <div className="animate-fade-up">
